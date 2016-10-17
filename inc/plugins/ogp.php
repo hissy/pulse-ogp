@@ -27,6 +27,8 @@ class Ogp
         if (!static::exists('url')) {
             if (!(empty($get_id)) && is_numeric($get_id) && $url_title && $blog_prefix) {
                 $url = static::getBaseURL() . $path . '/' . $blog_prefix . '-' . strtolower($url_title);
+            } elseif ($page == 'home') {
+                $url = static::getBaseURL() . $path . '/';
             } else {
                 $url = static::getBaseURL() . $path . '/' . $page;
             }
