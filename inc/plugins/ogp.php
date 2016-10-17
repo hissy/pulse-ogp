@@ -16,7 +16,7 @@ class Ogp
 
     public static function render()
     {
-        global $path, $page, $page_title, $page_desc, $url_title, $blog_prefix;
+        global $path, $page, $page_title, $page_desc, $get_id, $url_title, $blog_prefix;
         foreach (static::$tags as $property => $content) {
             if ($property == 'image') {
                 $content = static::getBaseURL() . $path . '/'. $content;
@@ -25,7 +25,7 @@ class Ogp
         }
 
         if (!static::exists('url')) {
-            if ($url_title && $blog_prefix) {
+            if (!(empty($get_id)) && is_numeric($get_id) && $url_title && $blog_prefix) {
                 $url = static::getBaseURL() . $path . '/' . $blog_prefix . '-' . strtolower($url_title);
             } else {
                 $url = static::getBaseURL() . $path . '/' . $page;
