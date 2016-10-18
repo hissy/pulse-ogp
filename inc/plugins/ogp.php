@@ -16,21 +16,21 @@ class Ogp
 
     public static function render()
     {
-        global $path, $page, $page_title, $page_desc, $get_id, $url_title, $blog_prefix, $ogp_default_image;
+        global $page, $page_title, $page_desc, $get_id, $url_title, $blog_prefix, $ogp_default_image;
         foreach (static::$tags as $property => $content) {
             if ($property == 'image') {
-                $content = static::getBaseURL() . $path . '/'. $content;
+                $content = static::getBaseURL(). $content;
             }
             static::print_tag($property, $content);
         }
 
         if (!static::exists('url')) {
             if (!(empty($get_id)) && is_numeric($get_id) && $url_title && $blog_prefix) {
-                $url = static::getBaseURL() . $path . '/' . $blog_prefix . '-' . strtolower($url_title);
+                $url = static::getBaseURL() . $blog_prefix . '-' . strtolower($url_title);
             } elseif ($page == 'home') {
-                $url = static::getBaseURL() . $path . '/';
+                $url = static::getBaseURL();
             } else {
-                $url = static::getBaseURL() . $path . '/' . $page;
+                $url = static::getBaseURL() . $page;
             }
             static::print_tag('url', $url);
         }
@@ -48,7 +48,7 @@ class Ogp
         }
 
         if (!static::exists('image') && is_string($ogp_default_image) && !empty($ogp_default_image)) {
-            static::print_tag('image', static::getBaseURL() . $path . '/' . $ogp_default_image);
+            static::print_tag('image', static::getBaseURL() . $ogp_default_image);
         }
     }
 
@@ -85,8 +85,8 @@ class Ogp
 
     private static function getBaseURL()
     {
-        global $ogp_base_url;
-        return (isset($ogp_base_url)) ? $ogp_base_url : static::getScheme() . '://' . static::getHost();
+        global $ogp_base_url, $path;
+        return (isset($ogp_base_url)) ? $ogp_base_url : static::getScheme() . '://' . static::getHost() . $path . '/';
     }
 
 }
