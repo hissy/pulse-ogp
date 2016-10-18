@@ -10,7 +10,7 @@
 You can add config values below to config.php.
 
 ```php
-$ogp_base_url = 'http://www.example.com'; // Change base url
+$ogp_base_url = 'http://www.example.com/'; // Change base url
 $ogp_default_image = 'template/img/logo.png'; // File path for default og:image
 ```
 
